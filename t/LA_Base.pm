@@ -1,4 +1,4 @@
-package Base;
+package LA_Base;
 
 use strict;
 use warnings;
@@ -34,7 +34,10 @@ __END__
 
 =head1 HISTORY
 
- $Log: Base.pm,v $
+ $Log: LA_Base.pm,v $
+ Revision 1.2  2005/03/03 23:32:59  abigail
+ Renamed Base.pm and Overload.pm because of case-insensitive filesystems
+
  Revision 1.1  2005/02/25 00:24:02  abigail
  First checkin
 
