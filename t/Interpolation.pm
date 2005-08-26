@@ -6,42 +6,68 @@ use Lexical::Attributes;
 
 has ($.scalar, @.array, %.hash) is rw;
 has $.scalar2 is rw;
+has $.a_index is rw;
+has $.h_index is rw;
+has $.regex is rw;
 
 sub new {
     bless [] => shift;
 }
 
-sub scalar_as_string {
+method scalar_as_string {
     "This is '$.scalar'";
 }
-sub scalar_single_quotes {
+method scalar_single_quotes {
     'This is "$.scalar"';
 }
-sub more_scalar_quotes {
+method more_scalar_quotes {
    (qq {This is '$.scalar'}, qq'This is "$.scalar"', qq !This is '$.scalar'!,
     qq qThis is '$.scalar'q, qq@This is "$.scalar"@, qq ,This is '$.scalar',,
      q {This is '$.scalar'},  q'This is "$.scalar"',  q !This is '$.scalar'!,
      q qThis is '$.scalar'q,  q@This is "$.scalar"@,  q ,This is '$.scalar',,)
 }
-sub double_interpolate {
+method double_interpolate {
     "This is '$.scalar' and that is '$.scalar2'";
 }
-sub escaped {
+method escaped {
    ("This is '$.scalar' and that is '\$.scalar2'",
     "This is '\\$.scalar' and that is '\\\$.scalar2'");
 }
+method with_normal_vars {
+    "This is '$_[0]' and '$.scalar' as well"
+}
 
-sub array_as_string {
+method array_as_string {
     "This is [@.array]";
 }
-sub array_single_quotes {
+method array_single_quotes {
     'This is [@.array]';
 }
-
-sub hash_as_string {
-    "This is {%.hash}";
+method count_array {
+    "There are $#.array elements in [@.array]"
+}
+method array_index {
+    my $index = shift;
+    "This is array element '$.array[$index]' on index '$index'";
+}
+method array_a_index {
+    "This is '$.array[$.a_index]'"
 }
 
+method hash_as_string {
+    "This is {%.hash}";
+}
+method hash_index {
+    my $index = shift;
+    "This is hash element '$.hash{$index}' on index '$index'";
+}
+method hash_h_index {
+    "This is '$.hash{$.h_index}'"
+}
+
+method match {
+    $_ [0] =~ /$.regex/;
+}
 
 1;
 
@@ -50,6 +76,9 @@ __END__
 =head1 HISTORY
 
  $Log: Interpolation.pm,v $
+ Revision 1.2  2005/08/26 21:24:45  abigail
+ New, or modified tests
+
  Revision 1.1  2005/03/03 23:34:03  abigail
  New files
 
